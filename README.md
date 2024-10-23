@@ -47,3 +47,77 @@ Through these tasks, we were able to analyze the dynamics of a linear system:
 4. Finally, we plotted phase portraits to gain additional insights into the system's overall dynamics.
 
 In this particular case, the system was found to be unstable due to the presence of a positive eigenvalue, which indicates that disturbances from the equilibrium point will grow over time.
+
+
+# DSML Lab Assignment 2 - Problem 2: Two-Dimensional Hopfield Neural Network
+
+## Problem Overview
+
+We are tasked with analyzing a two-neuron continuous-time Hopfield network, described by the following differential equation:
+
+\[
+\frac{dx}{dt} = -x + W\sigma(x) + I
+\]
+
+Where:
+- \( x(t) = \begin{bmatrix} x_1(t) \\ x_2(t) \end{bmatrix} \in \mathbb{R}^2 \) is the state vector.
+- \( W = \begin{bmatrix} 0 & w_{12} \\ w_{21} & 0 \end{bmatrix} \) is the weight matrix, with synaptic weights \( w_{12} = w_{21} = w \).
+- \( \sigma(x) = \tanh(x) \) is the activation function applied element-wise to \( x \).
+- \( I = \begin{bmatrix} 0 \\ 0 \end{bmatrix} \) is the constant external input vector in this problem.
+
+### Task 1: Analyze the Stability of the Null Equilibrium Point
+
+The first task is to analyze the stability of the trivial equilibrium point \( (x_1, x_2) = (0, 0) \). To solve this, we need to:
+
+1. **Set up the Jacobian Matrix**:
+   The Jacobian matrix of the system at \( (0, 0) \) tells us how small perturbations evolve around this equilibrium point. The matrix describes the local linear behavior of the system near the equilibrium.
+   
+   Since we are given that \( w_{12} = w_{21} = w \), the Jacobian at \( (0, 0) \) becomes:
+   
+   \[
+   J = \begin{bmatrix} -1 & w \\ w & -1 \end{bmatrix}
+   \]
+
+2. **Eigenvalue Calculation**:
+   The stability of the equilibrium point can be determined by analyzing the eigenvalues of the Jacobian. If the real part of all eigenvalues is negative, the equilibrium is stable. If any eigenvalue has a positive real part, the system is unstable at \( (0, 0) \).
+   
+   By solving for the eigenvalues of the Jacobian, we can determine how the value of \( w \) affects the stability of the system.
+
+3. **Effect of \( w \)**:
+   The parameter \( w \) affects the coupling between the two neurons. As we vary \( w \), the eigenvalues change, leading to different stability conditions at \( (0, 0) \). The analysis shows that when \( w \) increases, the system becomes more likely to be unstable.
+
+### Task 2: Find Equilibrium Points for Different Values of \( w \)
+
+In this task, we need to find and analyze the equilibrium points for three values of \( w \): \( w = 0.5, 1, 2 \).
+
+1. **Trivial Equilibrium Point**:
+   The trivial equilibrium point is always \( (x_1, x_2) = (0, 0) \). For each value of \( w \), we can determine the stability of this point by computing the Jacobian matrix as described in Task 1.
+
+2. **Numerical Methods**:
+   Although the problem suggests that the trivial equilibrium point may be the only solution for the given values of \( w \), for more complex systems, we would typically use numerical solvers to check for any non-trivial equilibrium points.
+
+3. **Jacobian and Stability**:
+   For each equilibrium point found, we calculate the Jacobian matrix and its eigenvalues to assess stability. This provides insights into whether the system will converge or diverge from these points.
+
+### Task 3: Simulate the Hopfield Network
+
+The final task is to simulate the Hopfield network for each value of \( w \) and visualize the system’s behavior.
+
+1. **Implement the System of Differential Equations**:
+   The system is implemented in Python using the differential equation \( \frac{dx}{dt} = -x + W\sigma(x) \). This describes how the states \( x_1 \) and \( x_2 \) evolve over time based on their interactions and the synaptic weights \( w \).
+
+2. **Initial Conditions**:
+   To explore different regions of the state space, we simulate the system for various initial conditions \( x(0) \). This helps visualize how the system behaves from different starting points.
+
+3. **Numerical Simulation**:
+   We solve the system of differential equations using a numerical ODE solver, such as `solve_ivp` from `scipy`. The system is simulated from \( t = 0 \) to \( t = 20 \), and the time evolution of \( x_1(t) \) and \( x_2(t) \) is plotted.
+
+4. **Plotting the Direction Field**:
+   In addition to plotting the trajectories, we visualize the direction field of the system in the \( x_1 - x_2 \) plane. This helps us see the general behavior of the system and how the trajectories flow through the state space.
+
+5. **Overlaying the Trajectories**:
+   Finally, we overlay the simulated trajectories on the direction field. This gives us a comprehensive view of how the system evolves over time and how it converges to or diverges from equilibrium points.
+
+### Conclusion
+
+This exercise allowed us to explore the dynamics of a simple two-neuron Hopfield network. We analyzed the stability of the equilibrium point \( (0, 0) \) for different values of \( w \), found equilibrium points, and simulated the system to visualize its behavior. Through this process, we gained insights into how the synaptic weights \( w \) affect the stability and overall dynamics of the network.
